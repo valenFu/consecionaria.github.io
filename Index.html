@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>Hellin Automotores | Venta de Autos en Cruz del Eje</title>
+    <meta name="description" content="Venta de autos usados y 0km en Cruz del Eje. Financiación, permutas y atención personalizada en Hellin Automotores.">
+    <meta name="keywords" content="autos usados Cruz del Eje, concesionaria Cruz del Eje, Hellin Automotores Córdoba">
+    <meta name="author" content="Hellin Automotores">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Hellin Automotores - Venta de Autos">
+    <meta property="og:description" content="Encuentra tu próximo vehículo en Cruz del Eje. Financiación y permutas disponibles.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_AR">
+
+    <!-- Preconnect mejora carga -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://www.google.com">
+
+    <link rel="stylesheet" href="css/styles.css">
+    </head>
+
+<body>
+
+  <!-- HEADER -->
+    <header class="header">
+      <div class="logo">
+    <h1 class="logo-top">HELLIN</h1>
+    <div class="logo-line"></div>
+    <span class="logo-bottom">automotores</span>
+  </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+      
+        <div class="hero-content">
+          <span class="hero-badge">Concesionaria en Cruz del Eje</span>
+      
+          <h2>Tu próximo vehículo te está esperando</h2>
+      
+          <p>
+            Autos usados y 0km · Financiación · Permutas
+          </p>
+      
+          <div class="hero-buttons">
+            <a href="#catalogo" class="btn-primary">
+              Ver vehículos
+            </a>
+      
+            <a href="https://wa.me/543549507205?text=Hola%20quiero%20informacion%20sobre%20los%20vehiculos%20publicados"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-secondary">
+              Contactar ahora
+            </a>
+          </div>
+        </div>
+      
+        <!-- Separador inferior -->
+        <div class="hero-wave">
+          <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
+            <path fill="#F4F6F9" d="M0,96L80,101.3C160,107,320,117,480,106.7C640,96,800,64,960,64C1120,64,1280,96,1360,112L1440,128V150H0Z"></path>
+          </svg>
+        </div>
+      
+      </section>
+
+    <!-- FILTROS -->
+        <section class="filtros">
+      <div class="filtros-card">
+
+        <div class="filtro-marca">
+          <label for="marcaSelect">Marca</label>
+          <div class="select-wrapper">
+            <select id="marcaSelect">
+              <option value="todas">Todas</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="filtro-precio">
+          <label>Rango de precio</label>
+
+          <div class="precio-valores">
+            <span id="precioMin">$10.000.000</span>
+            <span id="precioMax">$30.000.000</span>
+          </div>
+
+          <div class="slider-container">
+            <input type="range" id="minRange"
+                min="10000000"
+                max="30000000"
+                step="500000"
+                value="10000000">
+
+          <input type="range" id="maxRange"
+                min="10000000"
+                max="30000000"
+                step="500000"
+                value="30000000">
+            <div class="slider-track"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CATALOGO -->
+    <section id="catalogo" class="catalogo">
+      <div class="container">
+        <h2 class="titulo-seccion">Vehículos Disponibles</h2>
+        <div id="autosContainer" class="grid"></div>
+      </div>
+    </section>
+
+    <!-- POR QUE ELEGIRNOS -->
+    <section class="porque">
+      <div class="container">
+        <h2 class="titulo-seccion">¿Por qué elegirnos?</h2>
+
+        <div class="porque-grid">
+
+          <div class="porque-item">
+            <div class="porque-icon"></div>
+            <h3>Vehículos seleccionados</h3>
+            <p>Unidades revisadas y listas para transferir sin sorpresas.</p>
+          </div>
+
+          <div class="porque-item">
+            <div class="porque-icon"></div>
+            <h3>Financiación flexible</h3>
+            <p>Opciones de pago adaptadas a tu presupuesto.</p>
+          </div>
+
+          <div class="porque-item">
+            <div class="porque-icon"></div>
+            <h3>Atención personalizada</h3>
+            <p>Asesoramiento directo y transparente en todo momento.</p>
+          </div>
+
+          <div class="porque-item">
+            <div class="porque-icon"></div>
+            <h3>Concesionaria local</h3>
+            <p>Estamos en Cruz del Eje, con atención presencial.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- UBICACION -->
+    <section class="ubicacion">
+      <div class="container">
+        <h2>Conoce nuestro local</h2>
+
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!4v1700000000000!6m8!1m7!1svVDbqJdiBBV0qTGTtnAcEw!2m2!1d-30.7297796!2d-64.7951443!3f240.9!4f-0.78!5f0.7820865974627469"
+          width="100%"
+          height="450"
+          style="border:0;"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación Hellin Automotores">
+        </iframe>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Hellin Automotores - Todos los derechos reservados</p>
+      <p>Concesionaria en Cruz del Eje, Córdoba</p>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOTANTE -->
+  <a href="https://wa.me/543549507205?text=Hola%20quiero%20informacion%20sobre%20los%20vehiculos%20publicados"
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener"
+     aria-label="Contactar por WhatsApp">
+
+     <svg xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="28"
+          height="28"
+          fill="white">
+       <path d="M12.04 2C6.55 2 2.1 6.45 2.1 11.94c0 1.89.5 3.72 1.46 5.33L2 22l4.9-1.54a9.89 9.89 0 005.14 1.42h.01c5.49 0 9.94-4.45 9.94-9.94S17.53 2 12.04 2zm0 18.14h-.01a8.16 8.16 0 01-4.16-1.14l-.3-.18-2.9.91.95-2.82-.2-.29a8.15 8.15 0 01-1.26-4.37c0-4.51 3.67-8.18 8.18-8.18 4.51 0 8.18 3.67 8.18 8.18 0 4.51-3.67 8.18-8.18 8.18zm4.48-6.11c-.25-.12-1.48-.73-1.71-.82-.23-.08-.4-.12-.57.12-.17.25-.65.82-.8.99-.15.17-.3.19-.55.06-.25-.12-1.05-.39-2-1.25-.74-.66-1.24-1.48-1.39-1.73-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.57-1.38-.78-1.89-.21-.5-.42-.43-.57-.44h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.57.12.17 1.75 2.67 4.23 3.75.59.25 1.05.4 1.41.51.59.19 1.13.16 1.55.1.47-.07 1.48-.6 1.69-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+     </svg>
+  </a>
+
+  <script type="module" src="./js/main.js"></script>
+
+</body>
+</html>
