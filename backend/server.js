@@ -12,21 +12,21 @@ app.use(express.json());
 // carpeta para imágenes
 app.use("/uploads", express.static("uploads"));
 
-// servir frontend
-app.use(express.static(path.join(__dirname, "../frontend")));
+// servir archivos estáticos (html, css, js)
+app.use(express.static(path.join(__dirname, "..")));
 
 // conexión a mongo
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Mongo conectado"))
   .catch(err => console.log(err));
 
-// rutas
+// rutas API
 app.use("/api/autos", require("./routes/autos"));
 app.use("/api/auth", require("./routes/auth"));
 
-// index
+// página principal
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+  res.sendFile(path.join(__dirname, "../index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
