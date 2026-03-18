@@ -3,6 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+app.use("/assets", express.static("assets"));
+
 
 const app = express();
 

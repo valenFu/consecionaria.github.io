@@ -1,4 +1,5 @@
 const numeroWhatsApp = "543549507205";
+app.use("/assets", express.static("assets"));
 
 export function crearCard(auto) {
 
