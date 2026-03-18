@@ -10,24 +10,28 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// carpeta para imágenes
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+// Ruta absoluta a uploads
+const uploadsPath = path.resolve(__dirname, "../uploads");
+console.log("Ruta uploads:", uploadsPath);
 
-// servir archivos estáticos (CSS, JS, etc.) desde la raíz
+// Servir imágenes
+app.use("/uploads", express.static(uploadsPath));
+
+// Archivos estáticos (frontend)
 app.use(express.static(path.join(__dirname, "..")));
 
-// Conexión a MongoDB
+// Mongo
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Mongo conectado"))
   .catch(err => console.log(err));
 
-// Rutas API
+// Rutas
 app.use("/api/autos", require("./routes/autos"));
 app.use("/api/auth", require("./routes/auth"));
 
-// Página principal
+// Home
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../Index.html")); // Mayúscula I
+  res.sendFile(path.join(__dirname, "../Index.html"));
 });
 
 // Puerto
