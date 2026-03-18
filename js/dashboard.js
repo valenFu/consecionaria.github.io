@@ -1,5 +1,6 @@
-const API = "http://localhost:5000/api/autos";
+const API = "https://consecionaria-github-io-1.onrender.com/api/autos";
 const token = localStorage.getItem("token");
+
 let autoEditando = null;
 
 if (!token) {
@@ -28,55 +29,53 @@ async function cargarAutos() {
   }
 
   autos.forEach(auto => {
-  lista.innerHTML += `
-    <div class="card-auto">
+    lista.innerHTML += `
+      <div class="card-auto">
 
-      <div class="card-img">
-        ${
-          auto.imagen
-            ? `<img src="http://localhost:5000${auto.imagen}">`
-            : `<img src="assets/placeholder.jpg">`
-        }
-        <span class="badge">ADMIN</span>
-      </div>
-
-      <div class="card-content">
-
-        <h3>${auto.marca} ${auto.modelo}</h3>
-
-        <div class="card-info">
-          <span>${auto.anio}</span>
-          <span>${auto.kilometros} km</span>
+        <div class="card-img">
+          ${
+            auto.imagen
+              ? `<img src="${auto.imagen}">`
+              : `<img src="/assets/placeholder.jpg">`
+          }
+          <span class="badge">ADMIN</span>
         </div>
 
-        <div class="card-footer">
-          <span class="precio">$${auto.precio}</span>
-        </div>
-        <div class="admin-buttons">
+        <div class="card-content">
 
-        <button class="btn-edit"
-          onclick="editarAuto('${auto._id}')">
-          Editar
-        </button>
+          <h3>${auto.marca} ${auto.modelo}</h3>
 
-        <button class="btn-delete"
-          onclick="eliminarAuto('${auto._id}')">
-          Eliminar
-        </button>
-
-      </div>
-
-            </div>
+          <div class="card-info">
+            <span>${auto.anio}</span>
+            <span>${auto.kilometros} km</span>
           </div>
-  `;
-}); 
+
+          <div class="card-footer">
+            <span class="precio">$${auto.precio}</span>
+          </div>
+
+          <div class="admin-buttons">
+            <button class="btn-edit" onclick="editarAuto('${auto._id}')">
+              Editar
+            </button>
+
+            <button class="btn-delete" onclick="eliminarAuto('${auto._id}')">
+              Eliminar
+            </button>
+          </div>
+
+        </div>
+      </div>
+    `;
+  });
 }
 
 cargarAutos();
 
-//editar autos
+// ========================
+// Editar auto
+// ========================
 window.editarAuto = async function(id) {
-
   const res = await fetch(`${API}/${id}`);
   const auto = await res.json();
 
@@ -89,48 +88,55 @@ window.editarAuto = async function(id) {
   form.kilometros.value = auto.kilometros;
   form.descripcion.value = auto.descripcion;
 
+  // 🔥 IMPORTANTE: cargar imagen también
+  form.imagen.value = auto.imagen.replace("/assets/", "");
+
   document.querySelector("#autoForm button").textContent = "Actualizar Vehículo";
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
-
-}
-
+};
 
 // ========================
-// Crear auto
+// Crear / Editar auto
 // ========================
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const formData = new FormData(form);
+  const data = {
+    marca: form.marca.value,
+    modelo: form.modelo.value,
+    anio: form.anio.value,
+    precio: form.precio.value,
+    kilometros: form.kilometros.value,
+    descripcion: form.descripcion.value,
+    imagen: form.imagen.value // 🔥 clave
+  };
 
   if (autoEditando) {
-
     await fetch(`${API}/${autoEditando}`, {
       method: "PUT",
       headers: {
+        "Content-Type": "application/json",
         "Authorization": token
       },
-      body: formData
+      body: JSON.stringify(data)
     });
 
     autoEditando = null;
-
     document.querySelector("#autoForm button").textContent = "Guardar Vehículo";
 
   } else {
-
     await fetch(API, {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
         "Authorization": token
       },
-      body: formData
+      body: JSON.stringify(data)
     });
-
   }
 
   form.reset();
@@ -141,10 +147,8 @@ form.addEventListener("submit", async (e) => {
 // Eliminar auto
 // ========================
 async function eliminarAuto(id) {
-
   const confirmar = confirm("¿Eliminar este vehículo?");
-
-  if(!confirmar) return;
+  if (!confirmar) return;
 
   await fetch(`${API}/${id}`, {
     method: "DELETE",
@@ -155,7 +159,6 @@ async function eliminarAuto(id) {
 
   cargarAutos();
 }
-
 
 // ========================
 // Logout

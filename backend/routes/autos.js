@@ -1,18 +1,6 @@
 const router = require("express").Router();
 const Auto = require("../models/Auto");
 const auth = require("../middleware/auth");
-const multer = require("multer");
-
-// Configuración de multer
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  }
-});
-
-const upload = multer({ storage });
-
 
 // =====================
 // GET públicos
@@ -26,39 +14,45 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 // =====================
 // POST privado (crear auto)
 // =====================
-router.post("/", auth, upload.single("imagen"), async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
     const nuevoAuto = new Auto({
-      ...req.body,
-      imagen: req.file ? `/uploads/${req.file.filename}` : "",
+      marca: req.body.marca,
+      modelo: req.body.modelo,
+      anio: req.body.anio,
+      precio: req.body.precio,
+      kilometros: req.body.kilometros,
+      descripcion: req.body.descripcion,
+      imagen: `/assets/${req.body.imagen}` // 🔥 clave
     });
 
     await nuevoAuto.save();
     res.json(nuevoAuto);
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error al crear auto" });
   }
 });
 
-
 // =====================
 // PUT privado (editar auto)
 // =====================
-router.put("/:id", auth, upload.single("imagen"), async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
 
     const datos = {
-      ...req.body
+      marca: req.body.marca,
+      modelo: req.body.modelo,
+      anio: req.body.anio,
+      precio: req.body.precio,
+      kilometros: req.body.kilometros,
+      descripcion: req.body.descripcion,
+      imagen: `/assets/${req.body.imagen}` // 🔥 clave
     };
-
-    if (req.file) {
-      datos.imagen = `/uploads/${req.file.filename}`;
-    }
 
     const autoActualizado = await Auto.findByIdAndUpdate(
       req.params.id,
@@ -73,7 +67,6 @@ router.put("/:id", auth, upload.single("imagen"), async (req, res) => {
     res.status(500).json({ message: "Error al actualizar auto" });
   }
 });
-
 
 // =====================
 // DELETE privado
