@@ -3,20 +3,21 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-app.use("/assets", express.static("assets"));
 
-
-const app = express();
+const app = express(); // ✔️ Primero creamos app
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
 
+// Servir carpeta /assets (IMÁGENES)
+app.use("/assets", express.static("assets")); // ✔️ Ahora sí funciona
+
 // Ruta absoluta a uploads
 const uploadsPath = path.resolve(__dirname, "../uploads");
 console.log("Ruta uploads:", uploadsPath);
 
-// Servir imágenes
+// Servir imágenes de uploads
 app.use("/uploads", express.static(uploadsPath));
 
 // Archivos estáticos (frontend)
