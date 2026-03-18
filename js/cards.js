@@ -1,9 +1,9 @@
-const numeroWhatsApp = "543549507205"; // ← cambia por tu número real
+const numeroWhatsApp = "543549507205";
 
 export function crearCard(auto) {
 
   const mensaje = `Hola, estoy interesado en el ${auto.marca} ${auto.modelo} ${auto.anio} con ${auto.kilometros.toLocaleString()} km publicado por $${auto.precio.toLocaleString("es-AR")}. 
-    ¿Sigue disponible? Me gustaría coordinar una visita.`;
+¿Sigue disponible? Me gustaría coordinar una visita.`;
 
   const mensajeCodificado = encodeURIComponent(mensaje);
 
@@ -12,7 +12,7 @@ export function crearCard(auto) {
   return `
     <div class="card-auto">
       <div class="card-img">
-        <img src="http://localhost:5000${auto.imagen}" alt="${auto.marca} ${auto.modelo}" loading="lazy">
+        <img src="${auto.imagen}" alt="${auto.marca} ${auto.modelo}" loading="lazy">
         ${auto.destacado ? '<span class="badge">Destacado</span>' : ''}
       </div>
 
@@ -38,7 +38,7 @@ export function crearCard(auto) {
     </div>
   `;
 }
-  
+
 export function renderAutos(lista) {
   const container = document.getElementById("autosContainer");
   container.innerHTML = "";
