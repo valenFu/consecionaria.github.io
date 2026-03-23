@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 // =====================
-// POST privado (crear auto)
+// POST privado
 // =====================
 router.post("/", auth, async (req, res) => {
   try {
@@ -26,7 +26,7 @@ router.post("/", auth, async (req, res) => {
       precio: req.body.precio,
       kilometros: req.body.kilometros,
       descripcion: req.body.descripcion,
-      imagen: `/assets/${req.body.imagen}` // 🔥 clave
+      imagen: `/assets/autos/${req.body.imagen}` // 🔥 FIX
     });
 
     await nuevoAuto.save();
@@ -39,7 +39,7 @@ router.post("/", auth, async (req, res) => {
 });
 
 // =====================
-// PUT privado (editar auto)
+// PUT privado
 // =====================
 router.put("/:id", auth, async (req, res) => {
   try {
@@ -51,7 +51,7 @@ router.put("/:id", auth, async (req, res) => {
       precio: req.body.precio,
       kilometros: req.body.kilometros,
       descripcion: req.body.descripcion,
-      imagen: `/assets/${req.body.imagen}` // 🔥 clave
+      imagen: `/assets/autos/${req.body.imagen}` // 🔥 FIX
     };
 
     const autoActualizado = await Auto.findByIdAndUpdate(
@@ -69,7 +69,7 @@ router.put("/:id", auth, async (req, res) => {
 });
 
 // =====================
-// DELETE privado
+// DELETE
 // =====================
 router.delete("/:id", auth, async (req, res) => {
   try {
@@ -81,7 +81,7 @@ router.delete("/:id", auth, async (req, res) => {
 });
 
 // =====================
-// GET auto por ID
+// GET por ID
 // =====================
 router.get("/:id", async (req, res) => {
   try {
