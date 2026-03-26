@@ -19,6 +19,9 @@ router.get("/", async (req, res) => {
 // =====================
 router.post("/", auth, async (req, res) => {
   try {
+
+    console.log(" BODY RECIBIDO:", req.body); //  DEBUG
+
     const nuevoAuto = new Auto({
       marca: req.body.marca,
       modelo: req.body.modelo,
@@ -26,14 +29,19 @@ router.post("/", auth, async (req, res) => {
       precio: req.body.precio,
       kilometros: req.body.kilometros,
       descripcion: req.body.descripcion,
-      imagen: `/assets/autos/${req.body.imagen}` // 🔥 FIX
+      imagen: `/assets/autos/${req.body.imagen}`
     });
 
+    console.log(" AUTO A GUARDAR:", nuevoAuto); //  DEBUG
+
     await nuevoAuto.save();
+
+    console.log(" AUTO GUARDADO"); //DEBUG
+
     res.json(nuevoAuto);
 
   } catch (error) {
-    console.error(error);
+    console.error(" ERROR EN POST:", error); // DEBUG
     res.status(500).json({ message: "Error al crear auto" });
   }
 });
@@ -44,6 +52,8 @@ router.post("/", auth, async (req, res) => {
 router.put("/:id", auth, async (req, res) => {
   try {
 
+    console.log(" BODY UPDATE:", req.body); // DEBUG
+
     const datos = {
       marca: req.body.marca,
       modelo: req.body.modelo,
@@ -51,8 +61,10 @@ router.put("/:id", auth, async (req, res) => {
       precio: req.body.precio,
       kilometros: req.body.kilometros,
       descripcion: req.body.descripcion,
-      imagen: `/assets/autos/${req.body.imagen}` // 🔥 FIX
+      imagen: `/assets/autos/${req.body.imagen}`
     };
+
+    console.log(" DATOS A ACTUALIZAR:", datos); //  DEBUG
 
     const autoActualizado = await Auto.findByIdAndUpdate(
       req.params.id,
@@ -60,10 +72,12 @@ router.put("/:id", auth, async (req, res) => {
       { new: true }
     );
 
+    console.log(" AUTO ACTUALIZADO:", autoActualizado); //DEBUG
+
     res.json(autoActualizado);
 
   } catch (error) {
-    console.error(error);
+    console.error(" ERROR EN PUT:", error); // DEBUG
     res.status(500).json({ message: "Error al actualizar auto" });
   }
 });
