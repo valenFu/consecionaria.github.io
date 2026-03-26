@@ -95,7 +95,7 @@ window.editarAuto = async function(id) {
     form.kilometros.value = auto.kilometros;
     form.descripcion.value = auto.descripcion;
 
-    // FIX ruta imagen
+    // quitar /assets/autos/
     form.imagen.value = auto.imagen.replace("/assets/autos/", "");
 
     document.querySelector("#autoForm button").textContent = "Actualizar Vehículo";
@@ -117,42 +117,50 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const data = {
-    marca: form.marca.value,
-    modelo: form.modelo.value,
-    anio: form.anio.value,
-    precio: form.precio.value,
-    kilometros: form.kilometros.value,
-    descripcion: form.descripcion.value,
-    imagen: form.imagen.value
+    marca: form.marca.value.trim(),
+    modelo: form.modelo.value.trim(),
+    anio: Number(form.anio.value),
+    precio: Number(form.precio.value),
+    kilometros: Number(form.kilometros.value),
+    descripcion: form.descripcion.value.trim(),
+    imagen: form.imagen.value.trim()
   };
+
+  // 🔥 VALIDACIÓN CLAVE
+  if (!data.imagen) {
+    alert("Ingresá el nombre de la imagen (ej: ford-focus.png)");
+    return;
+  }
+
+  console.log("📤 DATOS ENVIADOS:", data);
 
   try {
 
-    if (autoEditando) {
-      await fetch(`${API}/${autoEditando}`, {
-        method: "PUT",
+    const res = await fetch(
+      autoEditando ? `${API}/${autoEditando}` : API,
+      {
+        method: autoEditando ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // 🔥 FIX
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(data)
-      });
+      }
+    );
 
-      autoEditando = null;
-      document.querySelector("#autoForm button").textContent = "Guardar Vehículo";
+    const result = await res.json();
 
-    } else {
-      await fetch(API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // 🔥 FIX
-        },
-        body: JSON.stringify(data)
-      });
+    console.log("📥 RESPUESTA BACKEND:", result);
+
+    if (!res.ok) {
+      alert(result.message || "Error al guardar el auto");
+      return;
     }
 
     form.reset();
+    autoEditando = null;
+    document.querySelector("#autoForm button").textContent = "Guardar Vehículo";
+
     cargarAutos();
 
   } catch (error) {
@@ -172,7 +180,7 @@ async function eliminarAuto(id) {
     await fetch(`${API}/${id}`, {
       method: "DELETE",
       headers: {
-        "Authorization": `Bearer ${token}` // 🔥 FIX
+        "Authorization": `Bearer ${token}`
       }
     });
 
