@@ -23,24 +23,22 @@
 
     <div class="admin-form-card">
       <h2>Agregar Vehículo</h2>
-      <form id="autoForm">
-        <div class="admin-form-grid">
-          <input type="text" name="marca" placeholder="Marca" required />
-          <input type="text" name="modelo" placeholder="Modelo" required />
-          <input type="number" name="anio" placeholder="Año" required />
-          <input type="number" name="precio" placeholder="Precio" required />
-          <input type="number" name="kilometros" placeholder="Kilómetros" />
-        </div>
+          <form id="autoForm">
+      <div class="admin-form-grid">
+        <input type="text" name="marca" placeholder="Marca" required />
+        <input type="text" name="modelo" placeholder="Modelo" required />
+        <input type="number" name="anio" placeholder="Año" required />
+        <input type="number" name="precio" placeholder="Precio" required />
+        <input type="number" name="kilometros" placeholder="Kilómetros" />
+      </div>
 
-        <textarea name="descripcion" placeholder="Descripción"></textarea>
+      <textarea name="descripcion" placeholder="Descripción"></textarea>
 
-        <input type="text" name="imagen" placeholder="Ej: ford-focus.png" required>
+      <!-- ✅ SOLO ESTE -->
+      <input type="file" name="imagen" accept="image/*">
 
-        <!-- INPUT DE IMAGEN -->
-        <input type="file" name="imagen" accept="image/*" />
-
-        <button class="btn-primary">Guardar Vehículo</button>
-      </form>
+      <button class="btn-primary">Guardar Vehículo</button>
+    </form>
         </div>
 
     <h2 style="margin-top:60px;">Vehículos Publicados</h2>
