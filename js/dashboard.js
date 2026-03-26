@@ -95,9 +95,7 @@ window.editarAuto = async function(id) {
     form.kilometros.value = auto.kilometros;
     form.descripcion.value = auto.descripcion;
 
-    // quitar /assets/autos/
-    form.imagen.value = auto.imagen.replace("/assets/autos/", "");
-
+    // ⚠️ NO tocamos imagen (Cloudinary)
     document.querySelector("#autoForm button").textContent = "Actualizar Vehículo";
 
     window.scrollTo({
@@ -116,23 +114,17 @@ window.editarAuto = async function(id) {
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const data = {
-    marca: form.marca.value.trim(),
-    modelo: form.modelo.value.trim(),
-    anio: Number(form.anio.value),
-    precio: Number(form.precio.value),
-    kilometros: Number(form.kilometros.value),
-    descripcion: form.descripcion.value.trim(),
-    imagen: form.imagen.value.trim()
-  };
+  const formData = new FormData(form);
 
-  // 🔥 VALIDACIÓN CLAVE
-  if (!data.imagen) {
-    alert("Ingresá el nombre de la imagen (ej: ford-focus.png)");
+  // 🔥 VALIDACIÓN (archivo)
+  const fileInput = form.querySelector('input[name="imagen"]');
+
+  if (!autoEditando && !fileInput.files.length) {
+    alert("Seleccioná una imagen");
     return;
   }
 
-  console.log("📤 DATOS ENVIADOS:", data);
+  console.log("📤 Enviando FormData...");
 
   try {
 
@@ -141,10 +133,9 @@ form.addEventListener("submit", async (e) => {
       {
         method: autoEditando ? "PUT" : "POST",
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(data)
+        body: formData
       }
     );
 
