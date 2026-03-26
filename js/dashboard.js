@@ -95,7 +95,6 @@ window.editarAuto = async function(id) {
     form.kilometros.value = auto.kilometros;
     form.descripcion.value = auto.descripcion;
 
-    // ⚠️ NO tocamos imagen (Cloudinary)
     document.querySelector("#autoForm button").textContent = "Actualizar Vehículo";
 
     window.scrollTo({
@@ -116,15 +115,12 @@ form.addEventListener("submit", async (e) => {
 
   const formData = new FormData(form);
 
-  // 🔥 VALIDACIÓN (archivo)
   const fileInput = form.querySelector('input[name="imagen"]');
 
-  if (!autoEditando && !fileInput.files.length) {
+  if (!autoEditando && (!fileInput || fileInput.files.length === 0)) {
     alert("Seleccioná una imagen");
     return;
   }
-
-  console.log("📤 Enviando FormData...");
 
   try {
 
@@ -133,7 +129,7 @@ form.addEventListener("submit", async (e) => {
       {
         method: autoEditando ? "PUT" : "POST",
         headers: {
-          "Authorization": `Bearer ${token}`
+          "Authorization": token // 🔥 FIX ACA
         },
         body: formData
       }
@@ -144,7 +140,7 @@ form.addEventListener("submit", async (e) => {
     console.log("📥 RESPUESTA BACKEND:", result);
 
     if (!res.ok) {
-      alert(result.message || "Error al guardar el auto");
+      alert(result.message || result.msg || "Error al guardar el auto");
       return;
     }
 
@@ -171,7 +167,7 @@ async function eliminarAuto(id) {
     await fetch(`${API}/${id}`, {
       method: "DELETE",
       headers: {
-        "Authorization": `Bearer ${token}`
+        "Authorization": token // 🔥 FIX ACA
       }
     });
 
