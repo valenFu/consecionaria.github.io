@@ -1,3 +1,4 @@
+console.log("SELECT:", marcaSelect);
 import { renderAutos } from "./cards.js";
 
 let autosGlobal = [];
@@ -6,7 +7,7 @@ const minRange = document.getElementById("minRange");
 const maxRange = document.getElementById("maxRange");
 const precioMin = document.getElementById("precioMin");
 const precioMax = document.getElementById("precioMax");
-const marcaSelect = document.getElementById("marcaSelect"); // 🔥 tu ID real
+const marcaSelect = document.getElementById("marcaSelect"); // tu ID real
 
 function formatearPrecio(valor) {
   return "$" + valor.toLocaleString("es-AR");
@@ -68,13 +69,16 @@ function filtrarAutos() {
 // INIT
 // =======================
 export function initFiltros(autos) {
+
+  console.log(" INIT FILTROS", autos);
+
   autosGlobal = autos;
 
-  cargarMarcas(); // 🔥 llena el select
+  cargarMarcas(); // llena el select
 
   minRange.addEventListener("input", actualizarPrecios);
   maxRange.addEventListener("input", actualizarPrecios);
-  marcaSelect.addEventListener("change", filtrarAutos); // 🔥 clave
+  marcaSelect.addEventListener("change", filtrarAutos); //clave
 
   actualizarPrecios();
 }
