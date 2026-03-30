@@ -1,5 +1,7 @@
 import { renderAutos } from "./cards.js";
 
+let autosGlobal = []; // 🔥 acá guardamos los autos
+
 const minRange = document.getElementById("minRange");
 const maxRange = document.getElementById("maxRange");
 const precioMin = document.getElementById("precioMin");
@@ -28,14 +30,16 @@ function filtrarAutos() {
   const minPrecio = parseInt(minRange.value);
   const maxPrecio = parseInt(maxRange.value);
 
-  const autosFiltrados = autos.filter(auto => {
+  const autosFiltrados = autosGlobal.filter(auto => {
     return auto.precio >= minPrecio && auto.precio <= maxPrecio;
   });
 
   renderAutos(autosFiltrados);
 }
 
-export function initFiltros() {
+export function initFiltros(autos) {
+  autosGlobal = autos; // 🔥 CLAVE
+
   minRange.addEventListener("input", actualizarPrecios);
   maxRange.addEventListener("input", actualizarPrecios);
 
