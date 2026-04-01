@@ -1,11 +1,9 @@
 import { renderAutos } from "./cards.js";
 
-let autosGlobal = []; // 🔥 acá guardamos los autos
+let autosGlobal = [];
 
-const minRange = document.getElementById("minRange");
-const maxRange = document.getElementById("maxRange");
-const precioMin = document.getElementById("precioMin");
-const precioMax = document.getElementById("precioMax");
+// variables del DOM
+let minRange, maxRange, precioMin, precioMax, marcaSelect;
 
 function formatearPrecio(valor) {
   return "$" + valor.toLocaleString("es-AR");
@@ -26,22 +24,59 @@ function actualizarPrecios() {
   filtrarAutos();
 }
 
+// genera las marcas dinámicamente
+function cargarMarcas() {
+  const marcas = [...new Set(autosGlobal.map(a => a.marca))];
+
+  marcaSelect.innerHTML = `<option value="todas">Todas</option>`;
+
+  marcas.forEach(marca => {
+    const option = document.createElement("option");
+    option.value = marca;
+    option.textContent = marca;
+    marcaSelect.appendChild(option);
+  });
+}
+
 function filtrarAutos() {
   const minPrecio = parseInt(minRange.value);
   const maxPrecio = parseInt(maxRange.value);
+  const marca = marcaSelect.value;
 
   const autosFiltrados = autosGlobal.filter(auto => {
-    return auto.precio >= minPrecio && auto.precio <= maxPrecio;
+    const cumplePrecio =
+      auto.precio >= minPrecio && auto.precio <= maxPrecio;
+
+    const cumpleMarca =
+      marca === "todas" || auto.marca === marca;
+
+    return cumplePrecio && cumpleMarca;
   });
 
   renderAutos(autosFiltrados);
 }
 
 export function initFiltros(autos) {
-  autosGlobal = autos; // 🔥 CLAVE
+  autosGlobal = autos;
+
+  // obtener elementos cuando el DOM ya existe
+  minRange = document.getElementById("minRange");
+  maxRange = document.getElementById("maxRange");
+  precioMin = document.getElementById("precioMin");
+  precioMax = document.getElementById("precioMax");
+  marcaSelect = document.getElementById("marcaSelect");
+
+  // seguridad básica
+  if (!marcaSelect) {
+    console.error("No se encontró #marcaSelect");
+    return;
+  }
+
+  cargarMarcas();
 
   minRange.addEventListener("input", actualizarPrecios);
   maxRange.addEventListener("input", actualizarPrecios);
+  marcaSelect.addEventListener("change", filtrarAutos);
 
-  actualizarPrecios(); // inicializa
+  actualizarPrecios();
 }
