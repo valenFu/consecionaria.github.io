@@ -1,22 +1,48 @@
 import { renderAutos } from "./cards.js";
 import { initFiltros } from "./filter.js";
 
-const API = "https://consecionaria-github-io-1.onrender.com/api/autos";
+const API = "/api/autos";
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-  try {
+    const header = document.querySelector(".header");
 
-    const res = await fetch(API);
-    const autos = await res.json();
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
+    });
 
-    renderAutos(autos);
-    initFiltros(autos);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    });
 
-  } catch (error) {
+    document.querySelectorAll(".porque-item").forEach((item) => {
+        observer.observe(item);
+    });
 
-    console.error("Error cargando autos:", error);
+    try {
 
-  }
+        const res = await fetch(API);
+        const autos = await res.json();
+
+        renderAutos(autos);
+        initFiltros(autos);
+
+    } catch (error) {
+
+        console.error("Error cargando autos:", error);
+
+    }
 
 });

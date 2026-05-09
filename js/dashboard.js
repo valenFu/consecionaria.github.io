@@ -1,4 +1,4 @@
-const API = "https://consecionaria-github-io-1.onrender.com/api/autos";
+const API = "/api/autos";
 const token = localStorage.getItem("token");
 
 let autoEditando = null;
