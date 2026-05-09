@@ -1,4 +1,4 @@
-const numeroWhatsApp = "543549507205";
+const numeroWhatsApp = "3549448090";
 
 export function crearCard(auto) {
 
